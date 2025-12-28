@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "413695392955",
+    "firebase_url": "https://appdev-d88e4-default-rtdb.firebaseio.com",
+    "project_id": "appdev-d88e4",
+    "storage_bucket": "appdev-d88e4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413695392955:android:bfb8888cb4f8d07a773d9e",
+        "android_client_info": {
+          "package_name": "com.crn.code404admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-siwVC_ZduUhqS2f7kIodHuxbKnW5tNE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413695392955:android:735b27ef46e44ed4773d9e",
+        "android_client_info": {
+          "package_name": "com.crn.oysterkodearena"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-siwVC_ZduUhqS2f7kIodHuxbKnW5tNE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
