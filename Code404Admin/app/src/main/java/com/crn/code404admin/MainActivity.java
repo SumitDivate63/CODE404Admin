@@ -11,13 +11,11 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,36 +45,27 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         fetchParticipantsFromFirebase();
-
-
-
     }
 
     private void fetchParticipantsFromFirebase() {
-        FirebaseDatabase.getInstance().getReference("Participants")
-                .orderByChild("score") // optional: sorts by score
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
+        FirebaseFirestore.getInstance().collection("Participants")
+                .orderBy("score", Query.Direction.DESCENDING)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        Toast.makeText(MainActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    if (value != null) {
                         participantList.clear();
-                        for (DataSnapshot data : snapshot.getChildren()) {
-                            String name = data.child("name").getValue(String.class);
-                            String mobile = data.child("mobile").getValue(String.class);
-                            int score = data.child("score").getValue(Integer.class);
-                            String level=data.child("level").getValue(String.class);
-                            participantList.add(new ParticipantModel(name, mobile,score,level));
+                        for (DocumentSnapshot doc : value.getDocuments()) {
+                            ParticipantModel participant = doc.toObject(ParticipantModel.class);
+                            if (participant != null) {
+                                participantList.add(participant);
+                            }
                         }
-                        participantList.sort((p1, p2) -> Integer.compare(p2.score, p1.score));
                         adapter.notifyDataSetChanged();
                     }
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        Toast.makeText(MainActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
                 });
-
-
-
     }
 }
